@@ -4,7 +4,7 @@
 
 # 单字分词Analyzer：onecharstandard
 
-ES的数字类型的text默认的分词器是[StandardAnalyzer](https://www.elastic.co/guide/en/elasticsearch/reference/8.5/analysis-standard-analyzer.html)，该分词器会将"123456789"（比如手机号）分词成"123456789"，所以如果查询"123"，"345"的时候，会找不到文档，但是ES的StandardAnalyzer 支持配置**max_token_length**，将该值改为1，可以实现单字分词的效果，如下**分析文本**有示例。可以应用于如根据手机号的一部分搜索文档的功能，但是每次配置比较繁琐，所以创建了onecharstandard的插件。下面演示正常配置过程：
+ES的数字类型的text默认的分词器是[StandardAnalyzer](https://www.elastic.co/guide/en/elasticsearch/reference/8.5/analysis-standard-analyzer.html)，该分词器会将"123456789"（比如手机号）分词成"123456789"，所以如果查询"123"，"345"的时候，会找不到文档，但是ES的StandardAnalyzer 支持配置**max_token_length**，将该值改为1，可以实现单字分词的效果，如下[**分析文本**](#分析文本)有示例。可以应用于如根据手机号的一部分搜索文档的功能，但是每次配置比较繁琐，所以创建了onecharstandard的插件。下面演示正常配置过程：
 
 ## 创建索引
 

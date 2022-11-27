@@ -1,0 +1,5 @@
+grant {
+    permission java.security.SecurityPermission "createAccessControlContext";
+    permission java.net.SocketPermission "*", "connect";
+    permission java.util.PropertyPermission "*", "read,write";
+};

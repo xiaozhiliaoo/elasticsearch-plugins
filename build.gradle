@@ -1,0 +1,56 @@
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'idea'
+
+group = 'org.lili.elasticsearch.plugins'
+version = '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
+}
+
+dependencies {
+    annotationProcessor 'org.projectlombok:lombok:1.18.6'
+    compileOnly 'org.projectlombok:lombok:1.18.6'
+
+    api 'org.elasticsearch:elasticsearch:7.15.1'
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allJava
+}
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
+}
+jar {
+    manifest {
+        attributes("Implementation-Title": "ESPlugin",
+                "Implementation-Version": version)
+    }
+    enabled true
+}
+
+task zip(type: Zip, dependsOn: jar) {
+    from('build/libs') {
+        include 'ESPlugin-' + version + '.jar'
+    }
+    from('libs') {
+        include '*.jar'
+    }
+    from('./') {
+        include 'plugin-descriptor.properties'
+        include 'plugin-security.policy'
+    }
+    baseName 'ESPlugin-es7.15.1'
+    destinationDir file('build/libs')
+}

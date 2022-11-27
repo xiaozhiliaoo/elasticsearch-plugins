@@ -120,7 +120,7 @@ POST yourindex/_doc
 
 - 因为配置了fields:keyword，也可以term做完全匹配。
 
-```json
+```
 GET yourindex/_search
 {
   "query": {
@@ -133,7 +133,7 @@ GET yourindex/_search
 
 但是这种方式需要在创建索引的时候在mapping和settings中配置analyzer，比较不方便，因此该插件提供了一个新的Analyzer：**onecharstandard**
 
-```json
+```
 //创建索引时可以直接配置，无需在settings里再构造自定义analyzer
 PUT yourindex
 {
@@ -177,8 +177,8 @@ elasticsearch-plugin.bat remove ESPlugin
 
 # 参考
 
-ES
+1. ES
 官方Plugin例子：[https://github.com/elastic/elasticsearch/tree/main/plugins/examples](https://github.com/elastic/elasticsearch/tree/main/plugins/examples)
 
-ES
+2. ES
 官方Plugin文档：[https://www.elastic.co/guide/en/elasticsearch/plugins/current/intro.html](https://www.elastic.co/guide/en/elasticsearch/plugins/current/intro.html)

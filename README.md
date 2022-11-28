@@ -40,6 +40,7 @@ PUT yourindex
 ## 分析文本
 
 ```
+//分词成1，2，3，4，5，6，7，8
 POST _analyze
 {
   "tokenizer": {
@@ -48,6 +49,14 @@ POST _analyze
   },
   "text": "12345678"
 }
+
+//分词成12345678整体
+POST _analyze
+{
+  "analyzer": "standard",
+  "text": "12345678"
+}
+
 ```
 
 ## 写入文档

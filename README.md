@@ -1,6 +1,6 @@
 # ElasticSearch插件(ES版本7.15.1)
 
-* [单字分词Analyzer：onecharstandard](#单字分词analyzeronecharstandard)
+[单字分词Analyzer：onecharstandard](#单字分词analyzeronecharstandard)
 
 # 单字分词Analyzer：onecharstandard
 
@@ -103,7 +103,7 @@ POST yourindex/_doc
     }
   }
   
-  //match_phrase查出只包含12的。分词效果是1，2，必须同时包括1,2的文档，且保证顺序不变。此时只有一个,查出Doc3
+  //match_phrase查出只包含12的文档。分词效果是1，2，必须同时包括1,2的文档，且保证顺序不变。此时只有一个,查出doc3
   GET yourindex/_search
   {
     "query": {
@@ -125,9 +125,46 @@ POST yourindex/_doc
       }
     }
   }
+  
+  //查不到，因为没有这个分词文档
+  GET yourindex/_search
+  {
+    "query": {
+      "term": {
+        "mobile": {
+          "value": "12"
+        }
+      }
+    }
+  }
+  
+  
+  //查不到，因为没有这个分词文档
+  GET yourindex/_search
+  {
+    "query": {
+      "term": {
+        "mobile": {
+          "value": "12"
+        }
+      }
+    }
+  }
+  
+  //只查到12文档doc3
+  GET yourindex/_search
+  {
+    "query": {
+      "term": {
+        "mobile.keyword": {
+          "value": "12"
+        }
+      }
+    }
+  }
   ```
 
-- 因为配置了fields:keyword，也可以term做完全匹配。
+- 因为配置了多字段fields:keyword，也可以用term做精确值查询。
 
 ```
 GET yourindex/_search

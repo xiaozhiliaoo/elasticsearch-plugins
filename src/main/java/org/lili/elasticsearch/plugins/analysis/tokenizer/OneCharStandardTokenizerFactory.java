@@ -17,8 +17,9 @@ public class OneCharStandardTokenizerFactory extends TokenizerFactory {
 
     @Override
     public Tokenizer create(AttributeFactory factory) {
-        StandardTokenizer oneCharStandardTokenizer = new StandardTokenizer();
-        oneCharStandardTokenizer.setMaxTokenLength(1);
-        return oneCharStandardTokenizer;
+        StandardTokenizer standardTokenizer = new StandardTokenizer();
+        //默认值255 org.apache.lucene.analysis.standard.StandardAnalyzer.DEFAULT_MAX_TOKEN_LENGTH
+        standardTokenizer.setMaxTokenLength(1);
+        return standardTokenizer;
     }
 }

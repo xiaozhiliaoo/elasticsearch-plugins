@@ -175,6 +175,31 @@ elasticsearch-plugin.bat list
 
 elasticsearch-plugin.bat remove ESPlugin
 
+# Standard Analyzer介绍
+
+官方文档 [Analysis Standard Analyzer](https://www.elastic.co/guide/en/elasticsearch/reference/8.5/analysis-standard-analyzer.html)
+
+| Character Filter | Tokenizer                                                    | Token Filter                                                 |
+| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 无               | [Standard Tokenizer](https://www.elastic.co/guide/en/elasticsearch/reference/8.5/analysis-standard-tokenizer.html) | [Lower Case Token Filter](https://www.elastic.co/guide/en/elasticsearch/reference/8.5/analysis-lowercase-tokenfilter.html) |
+|                  |                                                              | [Stop Token Filter](https://www.elastic.co/guide/en/elasticsearch/reference/8.5/analysis-stop-tokenfilter.html) |
+
+Standard Analyzer由Standard Tokenizer和两个Token Filter组成。
+
+Standard Tokenizer基于Unicode Text Segmentation算法，lowercase token filter是把大写转小写，stop token filter是移除停用词，类似的效果如下：
+
+```
+//会分为2 quick brown foxes jumped over lazy dog bone，其中大写转小写，并且the停用词被移除。
+POST _analyze
+{
+  "tokenizer": "standard",
+  "filter" : ["lowercase","stop"],
+  "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
+}
+```
+
+
+
 # 参考
 
 1. ES

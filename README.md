@@ -53,26 +53,27 @@ POST _analyze
 ## 写入文档
 
 ```
+//doc1
 POST yourindex/_doc
 {
   "mobile": "1"
 }
-
+//doc2
 POST yourindex/_doc
 {
   "mobile": "2"
 }
-
+//doc3
 POST yourindex/_doc
 {
   "mobile": "12"
 }
-
+//doc4
 POST yourindex/_doc
 {
   "mobile": "21"
 }
-
+//doc5
 POST yourindex/_doc
 {
   "mobile": "123"
@@ -81,10 +82,18 @@ POST yourindex/_doc
 
 ## 搜索文档
 
-- 可以使用手机号中的一部分（如一般常用为后四位）搜索文档。注意必须是match_phrase短语搜索，不能是match搜索。因为match搜索会查出不在mobile里面的内容。
+- 可以使用手机号中的一部分（如一般常用为后四位）搜索文档。注意必须是match_phrase(slop默认是0)短语搜索，不能是match搜索。因为match搜索(operator默认是OR)会查出不在mobile里面的内容。
+
+  | term | docId   |
+  | ---- | ------- |
+  | 1    | 1,2,3,5 |
+  | 2    | 2,3,4,5 |
+  | 3    | 5       |
+
+  
 
   ```
-  //match查询会查询全部。
+  //match查询会查询全部，doc1到doc5。因为operator默认是OR的关系。
   GET yourindex/_search
   {
     "query": {
@@ -94,7 +103,7 @@ POST yourindex/_doc
     }
   }
   
-  //match_phrase查出只包含12的。分词效果是1，2，必须同时包括1,2的文档，且保证顺序不变。此时只有一个
+  //match_phrase查出只包含12的。分词效果是1，2，必须同时包括1,2的文档，且保证顺序不变。此时只有一个,查出Doc3
   GET yourindex/_search
   {
     "query": {
@@ -104,7 +113,7 @@ POST yourindex/_doc
     }
   }
   
-  //该效果和match_phrase类似
+  //该效果和match_phrase类似，operator配置成and
   GET yourindex/_search
   {
     "query": {
